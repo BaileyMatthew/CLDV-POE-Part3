@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EventBooking.Models.Booking>
+
+@{
+    ViewData["Title"] = "Bookings";
+    string currentSearch = ViewData["CurrentFilter"] as string;
+}
+
+<h2 class="text-white mb-4">Bookings</h2>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form asp-action="Index" method="get" class="form-inline">
+            <div class="input-group">
+                <input type="text" name="searchString" value="@currentSearch" class="form-control" placeholder="Search..." />
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6 text-right">
+        <a asp-action="Create" class="btn btn-primary">Create New Booking</a>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No bookings found.</div>
+}
+else
+{
+    <table class="table table-dark table-bordered table-hover mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th>Booking Date</th>
+                <th>Event</th>
+                <th>Venue</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.BookingDate.ToString("yyyy-MM-dd")</td>
+                    <td>@item.Event?.EventName</td>
+                    <td>@item.Venue?.VenueName</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.BookingId" class="btn btn-success btn-sm mr-1">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.BookingId" class="btn btn-warning btn-sm mr-1">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.BookingId" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,45 @@
+﻿@model EventBooking.Models.Venue
+
+@{
+    ViewData["Title"] = "Create Venue";
+}
+
+<h1>Create New Venue</h1>
+
+<form asp-action="Create" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label asp-for="VenueName" class="control-label"></label>
+        <input asp-for="VenueName" class="form-control" />
+        <span asp-validation-for="VenueName" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Location" class="control-label"></label>
+        <input asp-for="Location" class="form-control" />
+        <span asp-validation-for="Location" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Capacity" class="control-label"></label>
+        <input asp-for="Capacity" class="form-control" />
+        <span asp-validation-for="Capacity" class="text-danger"></span>
+    </div>
+
+ 
+
+    <div class="form-group">
+        <label for="imageFile">Upload Image</label>
+        <input type="file" name="imageFile" class="form-control" />
+    </div>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
